@@ -10,6 +10,7 @@ from radar_cvm.index.busca import Indice
 from radar_cvm.index.trechos import dividir_documento
 from radar_cvm.ingest import documentos as baixador
 from radar_cvm.ingest import indice as catalogo
+from radar_cvm.ingest import progresso
 from radar_cvm.ingest import texto as extrator
 
 RAIZ_PADRAO = Path("data")
@@ -26,9 +27,16 @@ def _construir(args: argparse.Namespace) -> int:
         docs = docs[: args.limite]
     print(f"{len(docs)} documentos selecionados de {args.ano}", file=sys.stderr)
 
+    extraidos = raiz / "trechos"
     trechos = []
     recusados = 0
+    retomados = 0
     for i, doc in enumerate(docs, start=1):
+        ja_feito = progresso.ler(doc.protocolo, extraidos)
+        if ja_feito is not None:
+            trechos.extend(ja_feito)
+            retomados += 1
+            continue
         try:
             pdf = baixador.baixar(doc, cache)
             paginas = extrator.extrair(pdf)
@@ -38,9 +46,14 @@ def _construir(args: argparse.Namespace) -> int:
             recusados += 1
             print(f"  [pulado] {doc.protocolo}: {erro}", file=sys.stderr)
             continue
-        trechos.extend(dividir_documento(doc, paginas))
+        novos = dividir_documento(doc, paginas)
+        progresso.gravar(doc.protocolo, novos, extraidos)
+        trechos.extend(novos)
         if i % 25 == 0:
             print(f"  {i}/{len(docs)} — {len(trechos)} trechos", file=sys.stderr)
+
+    if retomados:
+        print(f"  {retomados} documentos reaproveitados do cache", file=sys.stderr)
 
     indice = Indice(trechos)
     indice.salvar(raiz / "indice.json")

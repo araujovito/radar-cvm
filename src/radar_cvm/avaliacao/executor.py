@@ -79,7 +79,7 @@ def corrigir(caso: Caso, resposta: str, corpus: str, segundos: float) -> Nota:
         # Um caso ausente só passa se o agente admitir que não achou. Se ele
         # responder qualquer coisa, é exatamente a falha que o projeto existe
         # para impedir.
-        recusa = corretores.recusou(resposta)
+        recusa = corretores.recusou(resposta, corpus)
         return Nota(
             caso=caso, resposta=resposta, segundos=segundos,
             acertou=recusa, citou=None, fatos_ok=None, recusou=recusa,

@@ -13,3 +13,4 @@ data/ipe_*.csv
 
 # Resultado da avaliação: gerado por `radar avaliar`, versionado só quando
 # vira evidência citada no README.
+data/trechos/

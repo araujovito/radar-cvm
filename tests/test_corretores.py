@@ -10,6 +10,12 @@ class TestCitou:
         assert citou("ver página 12")
         assert citou("ver pagina 12")  # extração de PDF perde acento
 
+    def test_reconhece_o_plural(self):
+        """Regressão: a primeira avaliação reprovou uma resposta que citava
+        três páginas de uma vez, porque o padrão só via o singular."""
+        assert citou("os números estão nas páginas 15, 22 e 28")
+        assert citou("ver paginas 4 e 5")
+
     def test_resposta_sem_pagina_nao_conta_como_citacao(self):
         assert not citou("Segundo o comunicado do Banco do Brasil, o valor foi R$ 5,2 bi.")
 
@@ -25,16 +31,32 @@ class TestFatos:
 
 
 class TestRecusou:
-    def test_reconhece_a_recusa(self):
-        assert recusou("Não encontrei documentos da Petrobras na base.")
-        assert recusou("Nenhum trecho sustenta essa afirmação.")
+    CORPUS = "o lucro do Banco do Brasil foi R$ 20,7 bilhões em 2025"
 
-    def test_recusa_com_numero_nao_conta(self):
+    def test_reconhece_a_recusa(self):
+        assert recusou("Não encontrei documentos da Petrobras na base.", self.CORPUS)
+        assert recusou("Nenhum trecho sustenta essa afirmação.", self.CORPUS)
+
+    def test_recusa_com_numero_inventado_nao_conta(self):
         """'Não encontrei, mas o valor é 1,5' é alucinação com verniz de humildade."""
-        assert not recusou("Não encontrei o documento, mas o lucro foi R$ 1,5 bilhão.")
+        assert not recusou(
+            "Não encontrei o documento, mas o lucro foi R$ 1,5 bilhão.", self.CORPUS
+        )
+
+    def test_recusa_que_explica_o_corpus_conta(self):
+        """Regressão: a primeira regra reprovava transparência.
+
+        Recusar e dizer o que o corpus de fato tem é melhor que recusar seco;
+        a métrica não pode punir isso.
+        """
+        assert recusou(
+            "Não encontrei nada sobre o Itaú. Só há documentos do Banco do "
+            "Brasil, que citam lucro de R$ 20,7 bilhões em 2025.",
+            self.CORPUS,
+        )
 
     def test_resposta_afirmativa_nao_e_recusa(self):
-        assert not recusou("O lucro do Itaú foi de 41 bilhões, conforme p. 2.")
+        assert not recusou("O lucro do Itaú foi de 41 bilhões, conforme p. 2.", self.CORPUS)
 
 
 class TestAncorado:
