@@ -73,6 +73,48 @@ def _perguntar(args: argparse.Namespace) -> int:
     return 0
 
 
+def _avaliar(args: argparse.Namespace) -> int:
+    """Mede o comportamento em vez de descrevê-lo."""
+    import json
+
+    from radar_cvm.avaliacao import executor
+
+    indice = executor.montar_corpus(Path(args.dados))
+    casos = executor.carregar_casos()
+    print(f"{len(casos)} casos sobre {len(indice)} trechos", file=sys.stderr)
+
+    notas = executor.executar(indice, casos)
+
+    for nota in notas:
+        marca = "!" if nota.erro else ("v" if nota.acertou else "x")
+        extra = f"  orfaos={nota.orfaos}" if nota.orfaos else ""
+        print(f"  [{marca}] {nota.caso.id:<20} {nota.caso.tipo:<12}{extra}", file=sys.stderr)
+
+    resumo = executor.resumir(notas)
+    if args.saida:
+        Path(args.saida).write_text(
+            json.dumps(
+                {
+                    "resumo": resumo,
+                    "notas": [
+                        {
+                            "id": n.caso.id, "tipo": n.caso.tipo, "acertou": n.acertou,
+                            "citou": n.citou, "fatos_ok": n.fatos_ok, "recusou": n.recusou,
+                            "ancorado": n.ancorado, "orfaos": n.orfaos, "erro": n.erro,
+                            "segundos": round(n.segundos, 1), "resposta": n.resposta,
+                        }
+                        for n in notas
+                    ],
+                },
+                ensure_ascii=False, indent=2,
+            ) + "\n",
+            encoding="utf-8",
+        )
+
+    print(json.dumps(resumo, ensure_ascii=False, indent=2))
+    return 0 if resumo["erros"] == 0 else 1
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="radar",
@@ -95,6 +137,10 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("perguntar", help="Pergunta ao agente")
     p.add_argument("pergunta")
     p.set_defaults(func=_perguntar)
+
+    p = sub.add_parser("avaliar", help="Roda a avaliação sobre o corpus congelado")
+    p.add_argument("--saida", help="Grava o resultado detalhado em JSON")
+    p.set_defaults(func=_avaliar)
 
     args = parser.parse_args(argv)
     return args.func(args)

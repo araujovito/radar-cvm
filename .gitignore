@@ -10,3 +10,6 @@ data/indice.json
 
 # Índice IPE baixado da CVM: 14 MB por ano, reprodutível por `radar construir`.
 data/ipe_*.csv
+
+# Resultado da avaliação: gerado por `radar avaliar`, versionado só quando
+# vira evidência citada no README.

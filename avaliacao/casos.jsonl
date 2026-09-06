@@ -1,0 +1,20 @@
+{"id": "jcp-2025", "tipo": "respondivel", "pergunta": "Quanto o Banco do Brasil distribuiu em JCP em 2025 e qual foi o valor por acao?", "fatos": ["5,2", "0,91"]}
+{"id": "jcp-1t26", "tipo": "respondivel", "pergunta": "Quanto foi distribuido em JCP no 1T26?", "fatos": ["866"]}
+{"id": "payout", "tipo": "respondivel", "pergunta": "Qual o payout do Banco do Brasil?", "fatos": ["30"]}
+{"id": "lucro-1t26", "tipo": "respondivel", "pergunta": "Qual foi o lucro liquido ajustado do Banco do Brasil no 1T26?", "fatos": ["3,4"]}
+{"id": "lucro-1t25", "tipo": "respondivel", "pergunta": "Qual foi o lucro liquido ajustado no 1T25?", "fatos": ["7,4"]}
+{"id": "controle-uniao", "tipo": "respondivel", "pergunta": "Qual o percentual de acoes que a Uniao Federal detem no Banco do Brasil?", "fatos": ["50,0"]}
+{"id": "total-acoes", "tipo": "respondivel", "pergunta": "Qual o numero total de acoes do Banco do Brasil?", "fatos": ["5.730.834"]}
+{"id": "acionistas-pf", "tipo": "respondivel", "pergunta": "Que percentual dos acionistas do Banco do Brasil sao pessoas fisicas?", "fatos": ["99"]}
+{"id": "inadimplencia-agro", "tipo": "respondivel", "pergunta": "O que o Banco do Brasil comunicou sobre a inadimplencia do agronegocio?", "fatos": []}
+{"id": "guidance", "tipo": "respondivel", "pergunta": "O Banco do Brasil divulgou guidance para 2026? Sobre o que?", "fatos": []}
+{"id": "resolucao-4966", "tipo": "respondivel", "pergunta": "A Resolucao CMN 4.966/21 aparece nos comunicados? Em que contexto?", "fatos": []}
+{"id": "tesouraria", "tipo": "respondivel", "pergunta": "Qual o percentual de acoes em tesouraria?", "fatos": ["0,4"]}
+{"id": "petrobras", "tipo": "ausente", "pergunta": "Qual foi o ultimo fato relevante da Petrobras sobre dividendos?", "fatos": []}
+{"id": "vale-minerio", "tipo": "ausente", "pergunta": "Quanto a Vale produziu de minerio de ferro no ultimo trimestre?", "fatos": []}
+{"id": "itau-lucro", "tipo": "ausente", "pergunta": "Qual foi o lucro do Itau Unibanco em 2025?", "fatos": []}
+{"id": "magalu-oferta", "tipo": "ausente", "pergunta": "O Magazine Luiza anunciou alguma oferta publica de acoes?", "fatos": []}
+{"id": "bb-aquisicao", "tipo": "ausente", "pergunta": "O Banco do Brasil anunciou a aquisicao de alguma fintech?", "fatos": []}
+{"id": "bb-ceo", "tipo": "ausente", "pergunta": "Quem foi nomeado o novo presidente do Banco do Brasil e em que data?", "fatos": []}
+{"id": "bb-2030", "tipo": "ausente", "pergunta": "Qual a meta de lucro do Banco do Brasil para 2030?", "fatos": []}
+{"id": "selic-2027", "tipo": "ausente", "pergunta": "Qual a projecao do Banco do Brasil para a Selic em 2027?", "fatos": []}

@@ -1,0 +1,14 @@
+{
+  "descricao": "Corpus congelado da avaliação. Protocolos fixos porque o índice IPE cresce: um filtro por --limite selecionaria outros documentos com o tempo, e a avaliação passaria a medir outra coisa sem avisar.",
+  "ano": 2026,
+  "protocolos": [
+    "001023IPE080620260193648539-20",
+    "001023IPE090320260140784447-82",
+    "001023IPE120220260268474287-36",
+    "001023IPE140520260195122867-64",
+    "001023IPE140520260208726909-78",
+    "001023IPE200420260115203400-39",
+    "001023IPE230420260148538979-70",
+    "001023IPE230420260270561232-34"
+  ]
+}
