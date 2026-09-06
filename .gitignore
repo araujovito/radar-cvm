@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Corpus baixado da CVM: reprodutível por `radar baixar`, pesado demais para o repo.
+data/cache/
+data/indice.json
+*.egg-info/
+
+# Índice IPE baixado da CVM: 14 MB por ano, reprodutível por `radar construir`.
+data/ipe_*.csv

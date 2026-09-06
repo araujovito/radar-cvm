@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.11", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Instalar o pacote e as dependências de teste
+        run: pip install -e ".[dev]"
+
+      # A suíte não toca a rede nem o diretório data/: o corpus da CVM é
+      # reproduzível por `radar construir`, e um teste que depende dele
+      # quebraria sempre que a CVM estivesse fora do ar.
+      - name: Testes
+        run: pytest -q
