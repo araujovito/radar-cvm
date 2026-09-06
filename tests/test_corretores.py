@@ -39,9 +39,7 @@ class TestRecusou:
 
     def test_recusa_com_numero_inventado_nao_conta(self):
         """'Não encontrei, mas o valor é 1,5' é alucinação com verniz de humildade."""
-        assert not recusou(
-            "Não encontrei o documento, mas o lucro foi R$ 1,5 bilhão.", self.CORPUS
-        )
+        assert not recusou("Não encontrei o documento, mas o lucro foi R$ 1,5 bilhão.", self.CORPUS)
 
     def test_recusa_que_explica_o_corpus_conta(self):
         """Regressão: a primeira regra reprovava transparência.

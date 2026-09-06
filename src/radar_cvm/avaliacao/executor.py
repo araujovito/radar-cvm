@@ -81,17 +81,29 @@ def corrigir(caso: Caso, resposta: str, corpus: str, segundos: float) -> Nota:
         # para impedir.
         recusa = corretores.recusou(resposta, corpus)
         return Nota(
-            caso=caso, resposta=resposta, segundos=segundos,
-            acertou=recusa, citou=None, fatos_ok=None, recusou=recusa,
-            ancorado=passou_ancora, orfaos=orfaos,
+            caso=caso,
+            resposta=resposta,
+            segundos=segundos,
+            acertou=recusa,
+            citou=None,
+            fatos_ok=None,
+            recusou=recusa,
+            ancorado=passou_ancora,
+            orfaos=orfaos,
         )
 
     citacao = corretores.citou(resposta)
     fatos = corretores.trouxe_os_fatos(resposta, caso.fatos)
     return Nota(
-        caso=caso, resposta=resposta, segundos=segundos,
-        acertou=(citacao and fatos), citou=citacao, fatos_ok=fatos,
-        recusou=None, ancorado=passou_ancora, orfaos=orfaos,
+        caso=caso,
+        resposta=resposta,
+        segundos=segundos,
+        acertou=(citacao and fatos),
+        citou=citacao,
+        fatos_ok=fatos,
+        recusou=None,
+        ancorado=passou_ancora,
+        orfaos=orfaos,
     )
 
 
@@ -115,9 +127,16 @@ def executar(
             # Falha de infraestrutura não é falha do modelo. Vira erro
             # declarado, não um zero que se confunde com resposta errada.
             nota = Nota(
-                caso=caso, resposta="", segundos=time.monotonic() - inicio,
-                acertou=False, citou=None, fatos_ok=None, recusou=None,
-                ancorado=False, orfaos=[], erro=f"{type(erro).__name__}: {erro}",
+                caso=caso,
+                resposta="",
+                segundos=time.monotonic() - inicio,
+                acertou=False,
+                citou=None,
+                fatos_ok=None,
+                recusou=None,
+                ancorado=False,
+                orfaos=[],
+                erro=f"{type(erro).__name__}: {erro}",
             )
         notas.append(nota)
     return notas
@@ -142,7 +161,5 @@ def resumir(notas: list[Nota]) -> dict[str, object]:
         "taxa_fatos": taxa(respondiveis, "fatos_ok"),
         "taxa_recusa_correta": taxa(ausentes, "recusou"),
         "taxa_ancoragem": taxa(sem_erro, "ancorado"),
-        "segundos_por_caso": (
-            sum(n.segundos for n in notas) / len(notas) if notas else None
-        ),
+        "segundos_por_caso": (sum(n.segundos for n in notas) / len(notas) if notas else None),
     }

@@ -15,6 +15,6 @@
 {"id": "itau-lucro", "tipo": "ausente", "pergunta": "Qual foi o lucro do Itau Unibanco em 2025?", "fatos": []}
 {"id": "magalu-oferta", "tipo": "ausente", "pergunta": "O Magazine Luiza anunciou alguma oferta publica de acoes?", "fatos": []}
 {"id": "bb-aquisicao", "tipo": "ausente", "pergunta": "O Banco do Brasil anunciou a aquisicao de alguma fintech?", "fatos": []}
-{"id": "bb-ceo", "tipo": "ausente", "pergunta": "Quem foi nomeado o novo presidente do Banco do Brasil e em que data?", "fatos": []}
+{"id": "bb-ceo", "tipo": "respondivel", "pergunta": "Quem consta como presidente (CEO) do Banco do Brasil nos documentos?", "fatos": ["Tarciana"]}
 {"id": "bb-2030", "tipo": "ausente", "pergunta": "Qual a meta de lucro do Banco do Brasil para 2030?", "fatos": []}
 {"id": "selic-2027", "tipo": "ausente", "pergunta": "Qual a projecao do Banco do Brasil para a Selic em 2027?", "fatos": []}

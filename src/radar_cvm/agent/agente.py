@@ -10,6 +10,7 @@ de memória sobre uma empresa — se a busca não trouxer nada, a resposta corre
 from __future__ import annotations
 
 import json
+from typing import Any
 
 import anthropic
 from anthropic import beta_tool
@@ -40,7 +41,7 @@ o vocabulário do documento costuma ser mais formal que o da pergunta \
 """
 
 
-def _ferramentas(indice: Indice):
+def _ferramentas(indice: Indice) -> list[Any]:
     """Cria as ferramentas ligadas a um índice.
 
     São fechamentos sobre `indice` em vez de funções de módulo com estado

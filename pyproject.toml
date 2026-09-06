@@ -9,7 +9,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0"]
+dev = ["pytest>=8.0", "ruff>=0.16", "mypy>=1.15"]
 
 [project.scripts]
 radar = "radar_cvm.cli:main"
@@ -23,3 +23,35 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+# Escolhidas por serem as que pegam defeito de verdade neste projeto:
+# E/F (erros e não-usados), I (ordem de import), B (bugbear — mutável como
+# default, except sem uso da exceção), UP (sintaxe já disponível no 3.11),
+# SIM (condicional redundante), RUF (regras próprias do ruff).
+# BLE entra porque os dois `except Exception` do projeto são deliberados
+# (PDF malformado na ingestão, falha de infra na avaliação): com a regra
+# ligada, o `noqa` vira a marca explícita disso e qualquer novo except
+# genérico precisa se justificar.
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF", "BLE"]
+
+[tool.ruff.lint.per-file-ignores]
+# Nos testes, asserção sem mensagem é o idioma do pytest, e nomes longos de
+# função são a documentação do caso.
+"tests/*" = ["E501"]
+
+[tool.mypy]
+python_version = "3.11"
+files = ["src"]
+strict = true
+
+# `anthropic` publica tipos, mas o tool runner ainda está em beta e algumas
+# assinaturas chegam como Any. Deixar o erro aparecer aqui só produziria
+# ruído sobre código que não é nosso.
+[[tool.mypy.overrides]]
+module = ["pypdf.*"]
+ignore_missing_imports = true

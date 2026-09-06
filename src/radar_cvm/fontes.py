@@ -8,9 +8,7 @@ from __future__ import annotations
 
 # O portal publica um ZIP por ano com o índice de todos os documentos
 # eventuais e periódicos (IPE) entregues pelas companhias abertas.
-URL_INDICE_IPE = (
-    "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/IPE/DADOS/ipe_cia_aberta_{ano}.zip"
-)
+URL_INDICE_IPE = "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/IPE/DADOS/ipe_cia_aberta_{ano}.zip"
 
 # O CSV vem em latin-1 com separador ";" — não é UTF-8, e ler como UTF-8
 # falha silenciosamente em acentos.

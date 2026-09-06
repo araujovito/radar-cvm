@@ -31,7 +31,7 @@ B = 0.75
 VAZIAS = frozenset(
     """a o e de da do das dos em no na nos nas um uma uns umas para por com sem
     que se ao aos as os como mais ou tambem sobre sua seu suas seus sao foi ser
-    nao entre pelo pela nesta neste desta deste companhia s.a sa ltda""".split()
+    nao entre pelo pela nesta neste desta deste companhia s.a sa ltda""".split()  # noqa: SIM905
 )
 
 
@@ -107,6 +107,6 @@ class Indice:
         caminho.write_text(json.dumps(dados, ensure_ascii=False), encoding="utf-8")
 
     @classmethod
-    def carregar(cls, caminho: Path) -> "Indice":
+    def carregar(cls, caminho: Path) -> Indice:
         dados = json.loads(caminho.read_text(encoding="utf-8"))
         return cls([Trecho(**d) for d in dados])

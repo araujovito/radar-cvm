@@ -105,9 +105,5 @@ def ancorado(resposta: str, corpus: str) -> tuple[bool, list[str]]:
     Devolve (passou, números não encontrados).
     """
     corpus_dobrado = _dobrar(corpus)
-    orfaos = [
-        numero
-        for numero in PADRAO_NUMERO.findall(resposta)
-        if numero not in corpus_dobrado
-    ]
+    orfaos = [numero for numero in PADRAO_NUMERO.findall(resposta) if numero not in corpus_dobrado]
     return (not orfaos), orfaos

@@ -29,9 +29,7 @@ class Provedor:
     def cliente(self) -> anthropic.Anthropic:
         chave = os.environ.get(self.variavel_chave)
         if not chave:
-            raise RuntimeError(
-                f"Provedor '{self.nome}' precisa da variável {self.variavel_chave}."
-            )
+            raise RuntimeError(f"Provedor '{self.nome}' precisa da variável {self.variavel_chave}.")
         if self.url_base:
             return anthropic.Anthropic(api_key=chave, base_url=self.url_base)
         return anthropic.Anthropic(api_key=chave)

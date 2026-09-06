@@ -62,7 +62,8 @@ def _buscar_bytes(documento: Documento) -> bytes:
             time.sleep(RECUO_BASE**tentativa + random.uniform(0, 1))
         try:
             with urllib.request.urlopen(pedido, timeout=120) as resposta:
-                return resposta.read(LIMITE_BYTES + 1)
+                conteudo: bytes = resposta.read(LIMITE_BYTES + 1)
+                return conteudo
         except urllib.error.HTTPError as erro:
             # 404 e 403 não melhoram com insistência; erro de servidor pode.
             if erro.code < 500:

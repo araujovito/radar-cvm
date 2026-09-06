@@ -111,16 +111,25 @@ def _avaliar(args: argparse.Namespace) -> int:
                     "resumo": resumo,
                     "notas": [
                         {
-                            "id": n.caso.id, "tipo": n.caso.tipo, "acertou": n.acertou,
-                            "citou": n.citou, "fatos_ok": n.fatos_ok, "recusou": n.recusou,
-                            "ancorado": n.ancorado, "orfaos": n.orfaos, "erro": n.erro,
-                            "segundos": round(n.segundos, 1), "resposta": n.resposta,
+                            "id": n.caso.id,
+                            "tipo": n.caso.tipo,
+                            "acertou": n.acertou,
+                            "citou": n.citou,
+                            "fatos_ok": n.fatos_ok,
+                            "recusou": n.recusou,
+                            "ancorado": n.ancorado,
+                            "orfaos": n.orfaos,
+                            "erro": n.erro,
+                            "segundos": round(n.segundos, 1),
+                            "resposta": n.resposta,
                         }
                         for n in notas
                     ],
                 },
-                ensure_ascii=False, indent=2,
-            ) + "\n",
+                ensure_ascii=False,
+                indent=2,
+            )
+            + "\n",
             encoding="utf-8",
         )
 
@@ -156,7 +165,8 @@ def main(argv: list[str] | None = None) -> int:
     p.set_defaults(func=_avaliar)
 
     args = parser.parse_args(argv)
-    return args.func(args)
+    codigo: int = args.func(args)
+    return codigo
 
 
 if __name__ == "__main__":

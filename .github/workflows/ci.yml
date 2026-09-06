@@ -6,6 +6,29 @@ on:
   pull_request:
 
 jobs:
+  qualidade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Instalar
+        run: pip install -e ".[dev]"
+
+      # Lint e tipo rodam num job só, e antes dos testes na ordem de leitura:
+      # quem abre o CI vermelho quer saber em dois segundos se é estilo ou
+      # comportamento.
+      - name: Lint (ruff)
+        run: ruff check .
+
+      - name: Formatação (ruff format)
+        run: ruff format --check .
+
+      - name: Tipos (mypy --strict)
+        run: mypy
+
   testes:
     runs-on: ubuntu-latest
     strategy:
@@ -14,7 +37,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
@@ -25,5 +47,9 @@ jobs:
       # A suíte não toca a rede nem o diretório data/: o corpus da CVM é
       # reproduzível por `radar construir`, e um teste que depende dele
       # quebraria sempre que a CVM estivesse fora do ar.
+      #
+      # A avaliação (`radar avaliar`) também não roda aqui: ela chama o modelo,
+      # leva minutos e é não determinística. Medir comportamento é uma decisão
+      # de quando olhar, não algo para travar um merge.
       - name: Testes
         run: pytest -q

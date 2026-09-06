@@ -8,8 +8,13 @@ from radar_cvm.ingest import documentos
 from radar_cvm.ingest.indice import Documento
 
 DOC = Documento(
-    protocolo="PROT-1", empresa="EMPRESA X", cnpj="0", categoria="Fato Relevante",
-    assunto="Assunto", data_entrega="2026-01-19", url="https://rad.cvm.gov.br/doc?p=1",
+    protocolo="PROT-1",
+    empresa="EMPRESA X",
+    cnpj="0",
+    categoria="Fato Relevante",
+    assunto="Assunto",
+    data_entrega="2026-01-19",
+    url="https://rad.cvm.gov.br/doc?p=1",
 )
 
 
