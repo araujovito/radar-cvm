@@ -81,11 +81,30 @@ docker build -t radar-cvm .
 docker run --rm -v "$PWD/data:/app/data" radar-cvm buscar "recompra de ações"
 ```
 
-## Credencial
+## Provedor do modelo
 
-O agente usa a API da Anthropic (`claude-opus-5`). Defina `ANTHROPIC_API_KEY`,
-ou faça `ant auth login`. Os subcomandos `construir` e `buscar` não precisam de
-credencial nenhuma — só `perguntar`.
+O agente foi escrito contra o SDK da Anthropic, mas não está preso a ele. A
+Z.ai serve os modelos GLM num endpoint que fala o mesmo protocolo, então trocar
+de provedor é trocar URL base, chave e nome do modelo — o laço de ferramentas
+não muda uma linha.
+
+| Provedor | Modelo | Variável | Custo |
+|---|---|---|---|
+| `zai` (padrão) | `glm-4.7-flash` | `ZAI_API_KEY` | gratuito |
+| `anthropic` | `claude-opus-5` | `ANTHROPIC_API_KEY` | pago |
+
+```bash
+export ZAI_API_KEY="..."          # padrão, não custa nada
+RADAR_PROVEDOR=anthropic radar perguntar "..."   # para comparar
+```
+
+O padrão é o gratuito de propósito: rodar este projeto não deve custar dinheiro
+a quem clonou para dar uma olhada. E manter os dois lado a lado transforma
+"modelo pequeno dá conta?" num experimento de uma variável de ambiente, em vez
+de uma reescrita.
+
+Os subcomandos `construir` e `buscar` não precisam de credencial nenhuma — só
+`perguntar`.
 
 ## Testes
 
@@ -103,6 +122,23 @@ Portal de dados abertos da CVM, conjunto IPE (Informações Periódicas e
 Eventuais): <https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/IPE/DADOS/>.
 Um ZIP por ano com o índice de todas as entregas; em 2026 são 33.658
 documentos, dos quais 7.138 nas categorias que este projeto indexa.
+
+## O comportamento, observado
+
+Rodado contra 8 documentos do Banco do Brasil, com `glm-4.7-flash`:
+
+**Perguntado sobre JCP** — respondeu com R$ 5,2 bi distribuídos em 2025 (R$ 0,91
+por ação) e R$ 866 mi no 1T26 (R$ 0,15 por ação), citando p.3 do comunicado de
+09/03/2026 e p.2 do de 08/06/2026. Os quatro números foram conferidos contra as
+páginas citadas: batem. A p.44 que ele também citou é a versão em inglês da
+mesma página.
+
+**Perguntado sobre a Petrobras**, que não está no índice — recusou, listou os
+termos que tinha buscado, e percebeu sozinho que todos os resultados eram do
+Banco do Brasil. Nenhuma tentativa de responder de memória.
+
+Duas observações não são uma medição, e é por isso que a avaliação automatizada
+é o próximo item.
 
 ## O que ainda não está aqui
 

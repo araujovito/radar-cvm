@@ -14,9 +14,8 @@ import json
 import anthropic
 from anthropic import beta_tool
 
+from radar_cvm.agent.provedor import Provedor, escolher
 from radar_cvm.index.busca import Indice
-
-MODELO = "claude-opus-5"
 
 INSTRUCOES = """\
 Você responde perguntas sobre documentos entregues à CVM por companhias abertas \
@@ -103,14 +102,19 @@ def responder(
     pergunta: str,
     indice: Indice,
     *,
+    provedor: Provedor | None = None,
     cliente: anthropic.Anthropic | None = None,
-    modelo: str = MODELO,
 ) -> str:
-    """Roda o agente até ele terminar e devolve o texto da resposta final."""
-    cliente = cliente or anthropic.Anthropic()
+    """Roda o agente até ele terminar e devolve o texto da resposta final.
+
+    `cliente` existe para os testes injetarem um dublê e exercitarem o laço
+    sem gastar chamada de API.
+    """
+    provedor = provedor or escolher()
+    cliente = cliente or provedor.cliente()
 
     corredor = cliente.beta.messages.tool_runner(
-        model=modelo,
+        model=provedor.modelo,
         max_tokens=16000,
         system=INSTRUCOES,
         thinking={"type": "adaptive"},
